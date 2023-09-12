@@ -36,10 +36,21 @@ public class WebSocketController {
         Random random = new Random();
         Map<String, Object> jsonMessage = new HashMap<>();
         jsonMessage.put("messageType", "babaji "+random.nextInt(10));
-        jsonMessage.put("data", "Sample JSON Data 1");
+        jsonMessage.put("data", "Sample JSON Data");
         jsonMessage.put("randomNumber", random.nextInt(100));
         System.out.println(jsonMessage);
         this.websocket.convertAndSend("/queue", jsonMessage);
+    }
+
+    @Scheduled(fixedRate = 4000)
+    public void secondTopic(){
+        Random random = new Random();
+        Map<String, Object> jsonMessage = new HashMap<>();
+        jsonMessage.put("name", "sumit "+random.nextInt(10));
+        jsonMessage.put("age", 21);
+        jsonMessage.put("email", "sumit"+random.nextInt(100)+"@gmail.com");
+        System.out.println(jsonMessage);
+        this.websocket.convertAndSend("/topic", jsonMessage);
     }
 
 }
